@@ -39,3 +39,14 @@ Route::get("/students", [StudentController::class, "index"]);
 Route::post("/students", [StudentController::class, "store"]);
 Route::put("/students/{id}", [StudentController::class, "update"]);
 Route::delete("/students/{id}", [StudentController::class, "destroy"]);
+
+// Pertemuan 6
+// Method get
+Route::get("/students/{id}", [StudentController::class, "show"]);
+
+// Method put
+Route::put("/students/{id}", [StudentController::class, "update"]);
+
+// Method delete
+Route::delete("/students/{id}", [StudentController::class, "destroy"]);
+
