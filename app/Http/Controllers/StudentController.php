@@ -32,29 +32,83 @@ class StudentController extends Controller
     }
 
     // Mengubah data
+    // public function update(Request $request, $id)
+    // {
+    //     $student = Student::find($id);
+    //     $student->update([
+    //         'nama' => $request->nama,
+    //         'nim' => $request->nim,
+    //         'email' => $request->email,
+    //         'jurusan' => $request->jurusan
+    //     ]);
+
+    //     $data = ["message" => "Data berhasil diubah", "data" => $student];
+
+    //     return response()->json($data, 200);
+    // }
+
+    // Menghapus data
+    // public function destroy($id)
+    // {
+    //     $student = Student::find($id);
+    //     $student->delete();
+
+    //     $data = ["message" => "Data berhasil dihapus", "data" => $student];
+
+    //     return response()->json($data, 200);
+    // }
+
+    // Pertemuan 6
+    // Menampilkan data berdasarkan id
+    public function show($id)
+    {
+        $student = Student::find($id);
+
+        if ($student) {
+            $data = ["message" => "Data berhasil ditemukan", "data" => $student];
+            return response()->json($data, 200);
+        } else {
+            $data = ["message" => "Data tidak ditemukan"];
+            return response()->json($data, 404);
+        }
+    }
+
+    // Mengubah data berdasarkan id
     public function update(Request $request, $id)
     {
         $student = Student::find($id);
-        $student->update([
-            'nama' => $request->nama,
-            'nim' => $request->nim,
-            'email' => $request->email,
-            'jurusan' => $request->jurusan
-        ]);
 
-        $data = ["message" => "Data berhasil diubah", "data" => $student];
+        if ($student) {
 
-        return response()->json($data, 200);
+            $input = [
+                'nama' => $request->nama ?? $student->nama,
+                'nim' => $request->nim ?? $student->nim,
+                'email' => $request->email ?? $student->email,
+                'jurusan' => $request->jurusan ?? $student->jurusan
+            ];
+
+            $student->update($input);
+
+            $data = ["message" => "Data berhasil diubah", "data" => $student];
+            return response()->json($data, 200);
+        } else {
+            $data = ["message" => "Data tidak ditemukan"];
+            return response()->json($data, 404);
+        }
     }
 
-    // Menghapus data
+    // Menghapus data berdasarkan id
     public function destroy($id)
     {
         $student = Student::find($id);
-        $student->delete();
 
-        $data = ["message" => "Data berhasil dihapus", "data" => $student];
-
-        return response()->json($data, 200);
+        if ($student) {
+            $student->delete();
+            $data = ["message" => "Data berhasil dihapus", "data" => $student];
+            return response()->json($data, 200);
+        } else {
+            $data = ["message" => "Data tidak ditemukan"];
+            return response()->json($data, 404);
+        }
     }
 }
