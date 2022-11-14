@@ -27,7 +27,7 @@ class StudentController extends Controller
 
         $student = Student::create($validateData);
 
-        $data = ["message" => "Data berhasil disimpan", "data" => $validateData];
+        $data = ["message" => "Data berhasil disimpan", "data" => $student];
 
         return response()->json($data, 201);
     }
