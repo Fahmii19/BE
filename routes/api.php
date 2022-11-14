@@ -21,32 +21,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-// ANIMALS ROUTE
-
-// Pertemuan 4
-// method: get
-Route::get("/animals", [AnimalController::class, "index"]);
-// method: post
-Route::post("/animals", [AnimalController::class, "store"]);
-// method: put
-Route::put("/animals/{id}", [AnimalController::class, "update"]);
-// method: delete
-Route::delete("/animals/{id}", [AnimalController::class, "destroy"]);
-
-// Pertemuan 5
-// Students Route
+// menampilkan data
 Route::get("/students", [StudentController::class, "index"]);
-Route::post("/students", [StudentController::class, "store"]);
-Route::put("/students/{id}", [StudentController::class, "update"]);
-Route::delete("/students/{id}", [StudentController::class, "destroy"]);
 
-// Pertemuan 6
-// Method get
+// menambahkan data
+Route::post("/students", [StudentController::class, "store"]);
+
+// menampilkkan data berdasarkan id
 Route::get("/students/{id}", [StudentController::class, "show"]);
 
-// Method put
+// mengubah data
 Route::put("/students/{id}", [StudentController::class, "update"]);
 
-// Method delete
+// menghapus data
 Route::delete("/students/{id}", [StudentController::class, "destroy"]);
-
