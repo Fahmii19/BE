@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,18 +21,26 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware(['auth:sanctum'])->group(function () {
+    // menampilkan data
+    Route::get("/students", [StudentController::class, "index"]);
 
-// menampilkan data
-Route::get("/students", [StudentController::class, "index"]);
+    // menambahkan data
+    Route::post("/students", [StudentController::class, "store"]);
 
-// menambahkan data
-Route::post("/students", [StudentController::class, "store"]);
+    // menampilkkan data berdasarkan id
+    Route::get("/students/{id}", [StudentController::class, "show"]);
 
-// menampilkkan data berdasarkan id
-Route::get("/students/{id}", [StudentController::class, "show"]);
+    // mengubah data
+    Route::put("/students/{id}", [StudentController::class, "update"]);
 
-// mengubah data
-Route::put("/students/{id}", [StudentController::class, "update"]);
+    // menghapus data
+    Route::delete("/students/{id}", [StudentController::class, "destroy"]);
+});
 
-// menghapus data
-Route::delete("/students/{id}", [StudentController::class, "destroy"]);
+
+
+// End point Register dan Login
+Route::post("/register", [AuthController::class, "register"]);
+
+Route::post("/login", [AuthController::class, "login"]);
