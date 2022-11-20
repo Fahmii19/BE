@@ -31,7 +31,9 @@ class PasienCovid extends Controller
 
         $patient = Patients::create($validateData);
 
-        $data = ["message" => "Resource is added successfully", "data" => $patient];
+        $token = $patient->createToken("token")->plainTextToken;
+
+        $data = ["message" => "Resource is added successfully", "data" => $patient, "token" => $token];
 
         return response()->json($data, 201);
     }
@@ -39,6 +41,7 @@ class PasienCovid extends Controller
     // Menampila data 1 data berdasarkan id
     public function show($id)
     {
+
         $patient = Patients::find($id);
         if ($patient) {
             $data = ["message" => "Get Detail Resource", "data" => $patient];
@@ -80,6 +83,60 @@ class PasienCovid extends Controller
         if ($patient) {
             $patient->delete();
             $data = ["message" => "Resource is deleted successfully"];
+            return response()->json($data, 200);
+        } else {
+            $data = ["message" => "Resource not found"];
+            return response()->json($data, 404);
+        }
+    }
+
+    // Mencari nama pasien
+    public function search($name)
+    {
+        $patient = Patients::where("name", "like", "%" . $name . "%")->get();
+        if ($patient) {
+            $data = ["message" => "Get Resource by name", "data" => $patient];
+            return response()->json($data, 200);
+        } else {
+            $data = ["message" => "Resource not found"];
+            return response()->json($data, 404);
+        }
+    }
+
+    // Mencari pasien dengan status positif
+    public function positive($data)
+    {
+        $patient = Patients::where("status", $data)->get();
+
+        if ($patient) {
+            $data = ["message" => "Get Resource by status", "data" => $patient];
+            return response()->json($data, 200);
+        } else {
+            $data = ["message" => "Resource not found"];
+            return response()->json($data, 404);
+        }
+    }
+
+    // Mencari pasien dengan status sembuh
+    public function recover()
+    {
+        $patient = Patients::where("status", $data)->get();
+        if ($patient) {
+            $data = ["message" => "Get Resource by status", "data" => $patient];
+            return response()->json($data, 200);
+        } else {
+            $data = ["message" => "Resource not found"];
+            return response()->json($data, 404);
+        }
+    }
+
+
+    // Mencari pasien dengan status death
+    public function death()
+    {
+        $patient = Patients::where("status", $data)->get();
+        if ($patient) {
+            $data = ["message" => "Get Resource by status", "data" => $patient];
             return response()->json($data, 200);
         } else {
             $data = ["message" => "Resource not found"];

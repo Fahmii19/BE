@@ -17,40 +17,33 @@ use App\Http\Controllers\PasienCovid;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
-// menampilkan data
-Route::get("/students", [StudentController::class, "index"]);
-
-// menambahkan data
-Route::post("/students", [StudentController::class, "store"]);
-
-// menampilkkan data berdasarkan id
-Route::get("/students/{id}", [StudentController::class, "show"]);
-
-// mengubah data
-Route::put("/students/{id}", [StudentController::class, "update"]);
-
-// menghapus data
-Route::delete("/students/{id}", [StudentController::class, "destroy"]);
-
-
 // Api Data Pasien Covid
 
-// menampilkan data covid keseluruhan
-Route::get("/covid", [PasienCovid::class, "index"]);
+Route::middleware(['auth:sanctum'])->group(function () {
+    // menampilkan data covid keseluruhan
+    Route::get("/covid", [PasienCovid::class, "index"]);
 
-// Menambahkan satu data pasien covid
-Route::post("/covid", [PasienCovid::class, "store"]);
+    // Menambahkan satu data pasien covid
+    Route::post("/covid", [PasienCovid::class, "store"]);
 
-// Menampilkan data covid berdasarkan id
-Route::get("/covid/{id}", [PasienCovid::class, "show"]);
+    // Menampilkan data covid berdasarkan id
+    Route::get("/covid/{id}", [PasienCovid::class, "show"]);
 
-// Mengubah data covid berdasarkan id
-Route::put("/covid/{id}", [PasienCovid::class, "update"]);
+    // Mengubah data covid berdasarkan id
+    Route::put("/covid/{id}", [PasienCovid::class, "update"]);
 
-// Menghapus data covid berdasarkan id
-Route::delete("/covid/{id}", [PasienCovid::class, "destroy"]);
+    // Menghapus data covid berdasarkan id
+    Route::delete("/covid/{id}", [PasienCovid::class, "destroy"]);
+
+    // Search resource by name
+    Route::get("/covid/search/{name}", [PasienCovid::class, "search"]);
+
+    // Get Positive Covid
+    Route::get("/covid/positive/{name}", [PasienCovid::class, "positive"]);
+
+    // Get Sembuh Covid
+    Route::get("/covid/recover/{name}", [PasienCovid::class, "recover"]);
+
+    // Get Death Covid
+    Route::get("/covid/death/{name}", [PasienCovid::class, "death"]);
+});
